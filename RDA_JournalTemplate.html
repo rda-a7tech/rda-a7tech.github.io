@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDA Daily Journal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        /* Style for textareas to ensure good readability and height */
+        textarea {
+            min-height: 8rem; /* Default minimum height */
+            resize: vertical; /* Allow vertical resizing */
+        }
+        @media (min-width: 768px) {
+            textarea {
+                min-height: 6rem; /* Slightly smaller on larger screens if needed */
+            }
+        }
+        /* Modal specific styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12 text-gray-800">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 md:p-8 lg:p-10 border border-gray-200">
+        <!-- Header Section -->
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2 rounded-lg p-2 inline-block bg-blue-50">RDA Daily Journal</h1>
+            <p id="current-date" class="text-xl font-medium text-gray-600 mt-2"></p>
+        </div>
+
+        <!-- Scripture Reflection Section -->
+        <div class="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4 flex items-center">
+                <span class="mr-3 text-3xl">📖</span> Scripture Reflection – Isaiah 40:27–31 (ESV)
+            </h2>
+            <div class="text-lg text-gray-700 leading-relaxed mb-4 p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
+                <p class="mb-2"><strong>27</strong> Why do you say, O Jacob,<br>
+                &nbsp; &nbsp; and speak, O Israel,<br>
+                “My way is hidden from the Lord,<br>
+                &nbsp; &nbsp; and my right is disregarded by my God”?</p>
+                <p class="mb-2"><strong>28</strong> Have you not known? Have you not heard?<br>
+                The Lord is the everlasting God,<br>
+                &nbsp; &nbsp; the Creator of the ends of the earth.<br>
+                He does not faint or grow weary;<br>
+                &nbsp; &nbsp; his understanding is unsearchable.</p>
+                <p class="mb-2"><strong>29</strong> He gives power to the faint,<br>
+                &nbsp; &nbsp; and to him who has no might he increases strength.</p>
+                <p class="mb-2"><strong>30</strong> Even youths shall faint and be weary,<br>
+                &nbsp; &nbsp; and young men shall fall exhausted;</p>
+                <p class="mb-2"><strong>31</strong> but they who wait for the Lord shall renew their strength;<br>
+                &nbsp; &nbsp; they shall mount up with wings like eagles;<br>
+                they shall run and not be weary;<br>
+                &nbsp; &nbsp; they shall walk and not faint.</p>
+            </div>
+            <label for="scripture-reflection-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🖊</span> 1. What stands out to me in this passage?
+            </label>
+            <textarea id="scripture-reflection-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out" placeholder="The realization that the Creator of the Heavens and the Earth has unending strength and endurance, and He is willing to give that same power to us."></textarea>
+        </div>
+
+        <!-- How do I feel now? Section -->
+        <div class="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg shadow-md">
+            <label for="feelings-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🧠</span> 2. How do I feel right now (physically, mentally, emotionally, spiritually)?
+            </label>
+            <textarea id="feelings-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm transition duration-150 ease-in-out" placeholder="Physically tired after a long trip (driving over 16 hours). Mentally pressed with a stacked to-do list. Emotionally neutral due to the early start. Spiritually content and grateful that God continues to speak to me."></textarea>
+        </div>
+
+        <!-- What's stirring in me today? Section -->
+        <div class="mb-8 p-6 bg-yellow-50 border border-yellow-200 rounded-lg shadow-md">
+            <label for="stirring-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🌱</span> 3. What's stirring in me today?
+            </label>
+            <textarea id="stirring-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500 shadow-sm transition duration-150 ease-in-out" placeholder="Hope. Even with only $0.65 in the bank and uncertainty about the next paycheck, I believe God will provide. There's also restlessness around upcoming choices (church, housing, serving opportunities)."></textarea>
+        </div>
+
+        <!-- Specific concerns section -->
+        <div class="mb-8 p-6 bg-red-50 border border-red-200 rounded-lg shadow-md">
+            <label for="concerns-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">📌</span> 4. What specific concerns are on my heart?
+            </label>
+            <textarea id="concerns-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 shadow-sm transition duration-150 ease-in-out" placeholder="I'm concerned about talking to Wade Gates. He wants to discuss helping at a church going through revitalization. I suspect he sees me as someone to just sing — not the full picture of what I bring."></textarea>
+        </div>
+
+        <!-- Patterns of escape section -->
+        <div class="mb-8 p-6 bg-purple-50 border border-purple-200 rounded-lg shadow-md">
+            <label for="escape-patterns-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🔁</span> 5. What are my patterns of escape today?
+            </label>
+            <textarea id="escape-patterns-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 shadow-sm transition duration-150 ease-in-out" placeholder="Losing myself in work, avoiding looming personal issues. Considering escaping into comic books as a temporary mental break."></textarea>
+        </div>
+
+        <!-- Guidance from God section -->
+        <div class="mb-8 p-6 bg-indigo-50 border border-indigo-200 rounded-lg shadow-md">
+            <label for="guidance-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🧭</span> 6. What guidance am I sensing from God today?
+            </label>
+            <textarea id="guidance-input" rows="6" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition duration-150 ease-in-out" placeholder="1. Start the day with prayer — asking God to order my steps before I rush into tasks.&#10;2. Resting in God means letting go of control and surrendering to the Spirit’s guidance.&#10;3. With Wade, I should listen first, ask clarifying questions, and give time to pray before responding."></textarea>
+        </div>
+
+        <!-- Prayer section -->
+        <div class="mb-8 p-6 bg-teal-50 border border-teal-200 rounded-lg shadow-md">
+            <label for="prayer-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🙏</span> Prayer
+            </label>
+            <textarea id="prayer-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 shadow-sm transition duration-150 ease-in-out" placeholder="Lord, I need help in taking things slowly but addressing the important things today. Please bring to my mind and attention what You would have me focus on."></textarea>
+        </div>
+
+        <!-- Tomorrow section -->
+        <div class="mb-8 p-6 bg-gray-100 border border-gray-300 rounded-lg shadow-md">
+            <label for="tomorrow-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🌅</span> Tomorrow
+            </label>
+            <textarea id="tomorrow-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500 shadow-sm transition duration-150 ease-in-out" placeholder="Tomorrow, I want to not bring anything over from today that needs to be done today. I do not want to start off behind."></textarea>
+        </div>
+
+        <!-- Save Button -->
+        <div class="text-center mt-10">
+            <button id="save-journal-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                Save Journal Entry
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Save Confirmation and Google Drive Instructions -->
+    <div id="saveModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModalBtn">&times;</span>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Journal Entry Saved!</h3>
+            <p class="text-lg text-gray-700 mb-4">Your journal entry has been downloaded as a text file to your device.</p>
+            <p class="text-md text-gray-600 mb-6">
+                <strong>To save this to Google Drive:</strong>
+            </p>
+            <ol class="list-decimal list-inside text-left text-gray-700 space-y-2 mb-6">
+                <li>Go to <a href="https://drive.google.com/" target="_blank" class="text-blue-600 hover:underline font-semibold">drive.google.com</a></li>
+                <li>Click on the "+ New" button (or "New" button).</li>
+                <li>Select "File upload".</li>
+                <li>Browse and select the downloaded file (e.g., <span class="font-mono bg-gray-100 px-2 py-1 rounded-md text-sm">RDA_Journal_YYYY-MM-DD.txt</span>) from your downloads folder.</li>
+            </ol>
+            <button id="okModalBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Set the current date dynamically
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateElement = document.getElementById('current-date');
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            const formattedDate = today.toLocaleDateString('en-US', options);
+            const dateForFilename = today.toISOString().slice(0, 10); // YYYY-MM-DD
+            dateElement.textContent = formattedDate;
+
+            const saveButton = document.getElementById('save-journal-btn');
+            const saveModal = document.getElementById('saveModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const okModalBtn = document.getElementById('okModalBtn');
+
+            // Function to collect all journal entry data
+            const collectJournalData = () => {
+                const scriptureReflection = document.getElementById('scripture-reflection-input').value;
+                const feelings = document.getElementById('feelings-input').value;
+                const stirring = document.getElementById('stirring-input').value;
+                const concerns = document.getElementById('concerns-input').value;
+                const escapePatterns = document.getElementById('escape-patterns-input').value;
+                const guidance = document.getElementById('guidance-input').value;
+                const prayer = document.getElementById('prayer-input').value;
+                const tomorrow = document.getElementById('tomorrow-input').value;
+
+                let journalContent = `RDA Journal Entry – ${formattedDate}\n\n`;
+                journalContent += `📖 Scripture Reflection – Isaiah 40:27–31 (ESV)\n`;
+                journalContent += `27 Why do you say, O Jacob,\n    and speak, O Israel,\n“My way is hidden from the Lord,\n    and my right is disregarded by my God”?\n`;
+                journalContent += `28 Have you not known? Have you not heard?\nThe Lord is the everlasting God,\n    the Creator of the ends of the earth.\nHe does not faint or grow weary;\n    his understanding is unsearchable.\n`;
+                journalContent += `29 He gives power to the faint,\n    and to him who has no might he increases strength.\n`;
+                journalContent += `30 Even youths shall faint and be weary,\n    and young men shall fall exhausted;\n`;
+                journalContent += `31 but they who wait for the Lord shall renew their strength;\n    they shall mount up with wings like eagles;\nthey shall run and not be weary;\n    they shall walk and not faint.\n\n`;
+
+                journalContent += `🖊 1. What stands out to me in this passage?\n${scriptureReflection}\n\n`;
+                journalContent += `🧠 2. How do I feel right now (physically, mentally, emotionally, spiritually)?\n${feelings}\n\n`;
+                journalContent += `🌱 3. What's stirring in me today?\n${stirring}\n\n`;
+                journalContent += `📌 4. What specific concerns are on my heart?\n${concerns}\n\n`;
+                journalContent += `🔁 5. What are my patterns of escape today?\n${escapePatterns}\n\n`;
+                journalContent += `🧭 6. What guidance am I sensing from God today?\n${guidance}\n\n`;
+                journalContent += `🙏 Prayer\n${prayer}\n\n`;
+                journalContent += `🌅 Tomorrow\n${tomorrow}\n`;
+
+                return journalContent;
+            };
+
+            // Function to trigger download
+            const downloadJournalEntry = (content, filename) => {
+                const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = filename;
+                document.body.appendChild(a); // Append to body to make it clickable in all browsers
+                a.click();
+                document.body.removeChild(a); // Clean up the element
+                URL.revokeObjectURL(a.href); // Release the object URL
+            };
+
+            // Event listener for save button
+            saveButton.addEventListener('click', () => {
+                const journalContent = collectJournalData();
+                const filename = `RDA_Journal_${dateForFilename}.txt`;
+                downloadJournalEntry(journalContent, filename);
+                saveModal.style.display = 'flex'; // Show the modal
+            });
+
+            // Close modal events
+            closeModalBtn.addEventListener('click', () => {
+                saveModal.style.display = 'none';
+            });
+            okModalBtn.addEventListener('click', () => {
+                saveModal.style.display = 'none';
+            });
+            window.addEventListener('click', (event) => {
+                if (event.target == saveModal) {
+                    saveModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
