@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RDA Daily Journal</title>
-    <!-- Tailwind CSS CDN -->
+    <title>My Daily Devotion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for Inter font */
@@ -76,38 +75,63 @@
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 md:p-8 lg:p-10 border border-gray-200">
         <!-- Header Section -->
         <div class="mb-8 text-center">
-            <h1 class="text-4xl font-extrabold text-blue-800 mb-2 rounded-lg p-2 inline-block bg-blue-50">RDA Daily Journal</h1>
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2 rounded-lg p-2 inline-block bg-blue-50">My Daily Devotion</h1>
             <p id="current-date" class="text-xl font-medium text-gray-600 mt-2"></p>
         </div>
 
-        <!-- Scripture Reflection Section -->
-        <div class="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-md">
+         <div class="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold text-blue-700 mb-4 flex items-center">
-                <span class="mr-3 text-3xl">📖</span> Scripture Reflection – Isaiah 40:27–31 (ESV)
+                <span class="mr-3 text-3xl">📖</span> Scripture Reflection
             </h2>
-            <div class="text-lg text-gray-700 leading-relaxed mb-4 p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
-                <p class="mb-2"><strong>27</strong> Why do you say, O Jacob,<br>
-                &nbsp; &nbsp; and speak, O Israel,<br>
-                “My way is hidden from the Lord,<br>
-                &nbsp; &nbsp; and my right is disregarded by my God”?</p>
-                <p class="mb-2"><strong>28</strong> Have you not known? Have you not heard?<br>
-                The Lord is the everlasting God,<br>
-                &nbsp; &nbsp; the Creator of the ends of the earth.<br>
-                He does not faint or grow weary;<br>
-                &nbsp; &nbsp; his understanding is unsearchable.</p>
-                <p class="mb-2"><strong>29</strong> He gives power to the faint,<br>
-                &nbsp; &nbsp; and to him who has no might he increases strength.</p>
-                <p class="mb-2"><strong>30</strong> Even youths shall faint and be weary,<br>
-                &nbsp; &nbsp; and young men shall fall exhausted;</p>
-                <p class="mb-2"><strong>31</strong> but they who wait for the Lord shall renew their strength;<br>
-                &nbsp; &nbsp; they shall mount up with wings like eagles;<br>
-                they shall run and not be weary;<br>
-                &nbsp; &nbsp; they shall walk and not faint.</p>
+
+            <div class="mb-4">
+                <label for="scripture-theme-select" class="block text-lg font-medium text-gray-700 mb-2">
+                    Select a Theme:
+                </label>
+                <select id="scripture-theme-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out">
+                    <option value="">-- Choose a Theme --</option>
+                    <option value="Hope">Hope</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Guidance">Guidance</option>
+                    <option value="Peace">Peace</option>
+                    <option value="Love">Love</option>
+                    <option value="Faith">Faith</option>
+                    <option value="Provision">Provision</option>
+                    <option value="Forgiveness">Forgiveness</option>
+                    <option value="Wisdom">Wisdom</option>
+                    <option value="Patience">Patience</option>
+                    <option value="Joy">Joy</option>
+                    <option value="Other">Other (Specify Below)</option>
+                </select>
             </div>
-            <label for="scripture-reflection-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
-                <span class="mr-2 text-2xl">🖊</span> 1. What stands out to me in this passage?
+
+            <div id="custom-theme-input-group" class="mb-4 hidden">
+                <label for="custom-scripture-theme" class="block text-lg font-medium text-gray-700 mb-2">
+                    Specify Custom Theme:
+                </label>
+                <input type="text" id="custom-scripture-theme" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out" placeholder="e.g., Perseverance, Humility, Grace">
+            </div>
+
+            <div class="mb-6 text-center">
+                <button id="generate-scripture-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    Generate Scripture
+                </button>
+                <span id="scripture-loading-spinner" class="loading-spinner hidden"></span>
+            </div>
+
+            <label for="generated-scripture-display" class="block text-lg font-medium text-gray-700 mb-2">
+                Generated Scripture:
             </label>
-            <textarea id="scripture-reflection-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out" placeholder="The realization that the Creator of the Heavens and the Earth has unending strength and endurance, and He is willing to give that same power to us."></textarea>
+            <div id="generated-scripture-display" class="text-lg text-gray-700 leading-relaxed mb-4 p-4 bg-white rounded-lg border border-gray-200 shadow-sm min-h-[100px] overflow-auto">
+                <!-- Generated scripture will appear here -->
+                Select a theme (or specify 'Other') and click "Generate Scripture" to get a passage.
+            </div>
+
+            <label for="scripture-reflection-input" class="block text-lg font-medium text-gray-700 mb-2 flex items-center">
+                <span class="mr-2 text-2xl">🖊</span> What stands out to me in this passage?
+                <span class="ml-2 text-sm italic text-gray-500"> — Focus on your key takeaways from the scripture.</span>
+            </label>
+            <textarea id="scripture-reflection-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out" placeholder="My key takeaways and reflections on the scripture..."></textarea>
         </div>
 
         <!-- How do I feel now? Section -->
@@ -115,7 +139,7 @@
             <label for="feelings-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">🧠</span> 2. How do I feel right now (physically, mentally, emotionally, spiritually)?
             </label>
-            <textarea id="feelings-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm transition duration-150 ease-in-out" placeholder="Physically tired after a long trip (driving over 16 hours). Mentally pressed with a stacked to-do list. Emotionally neutral due to the early start. Spiritually content and grateful that God continues to speak to me."></textarea>
+            <textarea id="feelings-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm transition duration-150 ease-in-out" placeholder="Be sure to include all areas (physically, emotionally, mentally, spiritually"></textarea>
         </div>
 
         <!-- What's stirring in me today? Section -->
@@ -123,7 +147,7 @@
             <label for="stirring-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">🌱</span> 3. What's stirring in me today?
             </label>
-            <textarea id="stirring-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500 shadow-sm transition duration-150 ease-in-out" placeholder="Hope. Even with only $0.65 in the bank and uncertainty about the next paycheck, I believe God will provide. There's also restlessness around upcoming choices (church, housing, serving opportunities)."></textarea>
+            <textarea id="stirring-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500 shadow-sm transition duration-150 ease-in-out" placeholder="Based on the scripture selection, what is moving you?"></textarea>
         </div>
 
         <!-- Specific concerns section -->
@@ -131,7 +155,7 @@
             <label for="concerns-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">📌</span> 4. What specific concerns are on my heart?
             </label>
-            <textarea id="concerns-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 shadow-sm transition duration-150 ease-in-out" placeholder="I'm concerned about talking to Wade Gates. He wants to discuss helping at a church going through revitalization. I suspect he sees me as someone to just sing — not the full picture of what I bring."></textarea>
+            <textarea id="concerns-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 shadow-sm transition duration-150 ease-in-out" placeholder="A few short sentences."></textarea>
         </div>
 
         <!-- Patterns of escape section -->
@@ -139,7 +163,7 @@
             <label for="escape-patterns-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">🔁</span> 5. What are my patterns of escape today?
             </label>
-            <textarea id="escape-patterns-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 shadow-sm transition duration-150 ease-in-out" placeholder="Losing myself in work, avoiding looming personal issues. Considering escaping into comic books as a temporary mental break."></textarea>
+            <textarea id="escape-patterns-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 shadow-sm transition duration-150 ease-in-out" placeholder="Ex:Work, socical media,etc."></textarea>
         </div>
 
         <!-- Guidance from God section -->
@@ -147,7 +171,7 @@
             <label for="guidance-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">🧭</span> 6. What guidance am I sensing from God today?
             </label>
-            <textarea id="guidance-input" rows="6" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition duration-150 ease-in-out" placeholder="1. Start the day with prayer — asking God to order my steps before I rush into tasks.&#10;2. Resting in God means letting go of control and surrendering to the Spirit’s guidance.&#10;3. With Wade, I should listen first, ask clarifying questions, and give time to pray before responding."></textarea>
+            <textarea id="guidance-input" rows="6" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition duration-150 ease-in-out" placeholder="Be as verbose or short as you wish, but be specific."></textarea>
         </div>
 
         <!-- Prayer section -->
@@ -155,7 +179,7 @@
             <label for="prayer-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">🙏</span> Prayer
             </label>
-            <textarea id="prayer-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 shadow-sm transition duration-150 ease-in-out" placeholder="Lord, I need help in taking things slowly but addressing the important things today. Please bring to my mind and attention what You would have me focus on."></textarea>
+            <textarea id="prayer-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 shadow-sm transition duration-150 ease-in-out" placeholder="What is your prayer for today?"></textarea>
         </div>
 
         <!-- Tomorrow section -->
@@ -163,7 +187,7 @@
             <label for="tomorrow-input" class="block text-xl font-medium text-gray-700 mb-2 flex items-center">
                 <span class="mr-2 text-2xl">🌅</span> Tomorrow
             </label>
-            <textarea id="tomorrow-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500 shadow-sm transition duration-150 ease-in-out" placeholder="Tomorrow, I want to not bring anything over from today that needs to be done today. I do not want to start off behind."></textarea>
+            <textarea id="tomorrow-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500 shadow-sm transition duration-150 ease-in-out" placeholder="What single thing are you looking to for tomorrow"></textarea>
         </div>
 
         <!-- Save Button -->
